@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 12 Novembre 2018 à 10:20
+-- Généré le: Lun 12 Novembre 2018 à 10:24
 -- Version du serveur: 5.5.62-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.26
 
@@ -30,6 +30,18 @@ CREATE TABLE IF NOT EXISTS `Bateau` (
   `Id` int(11) NOT NULL,
   `Nom` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Categorie`
+--
+
+CREATE TABLE IF NOT EXISTS `Categorie` (
+  `Lettre` varchar(5) NOT NULL,
+  `Libelle` text CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`Lettre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
