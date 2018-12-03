@@ -151,7 +151,7 @@ $requete1 = "SELECT * FROM Secteur";
                     <div class="col-lg-8 d-none d-xl-block">
                         <nav class="mainmenu alignright">
                             <ul>
-                                <li class="active"><a href="index2.html">Home</a>
+                                <li class="active"><a href="index2.php">Home</a>
                                      
                                        
                                        
