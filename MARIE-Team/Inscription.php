@@ -46,7 +46,7 @@ else{
 	 	else{
 	 		$sql ="INSERT INTO Client (Nom, Prenom, Adresse, CodePostal, Ville, Fidelitee, Email, Hash, Password) VALUES ('$nom', '$prenom', '$adresse', '$codePostal', '$ville', '$Fidelitee', '$email', '$hash', '$mdp')";
 	  			if ($conn->query($sql)) {
-	  				echo '<script type="text/javascript">alerteEmail("Compte créé avec succès", "index2.html");</script>';
+	  				echo '<script type="text/javascript">alerteEmail("Compte créé avec succès", "index2.php");</script>';
 	  			}
 	  			else {
 	  				echo "Erreur lors de la création du compte";
