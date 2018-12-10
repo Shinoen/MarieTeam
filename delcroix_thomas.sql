@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 12 Novembre 2018 à 11:08
+-- Généré le: Lun 10 Décembre 2018 à 11:05
 -- Version du serveur: 5.5.62-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.26
 
@@ -19,6 +19,17 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `delcroix_thomas`
 --
+
+DELIMITER $$
+--
+-- Procédures
+--
+CREATE DEFINER=`delcroix.thomas`@`%` PROCEDURE `Myproc2`(nom varchar(50), OUT  longueur int)
+begin
+set  longueur=length(nom) ;
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -44,6 +55,15 @@ CREATE TABLE IF NOT EXISTS `Categorie` (
   PRIMARY KEY (`Lettre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `Categorie`
+--
+
+INSERT INTO `Categorie` (`Lettre`, `Libelle`) VALUES
+('A', 'Passager'),
+('B', 'Véh.inf.2m'),
+('C', 'Véh.sup.2m');
+
 -- --------------------------------------------------------
 
 --
@@ -62,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
   `Hash` varchar(32) CHARACTER SET utf8 NOT NULL,
   `Password` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`IdClient`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Contenu de la table `Client`
@@ -70,7 +90,11 @@ CREATE TABLE IF NOT EXISTS `Client` (
 
 INSERT INTO `Client` (`IdClient`, `Nom`, `Prenom`, `Adresse`, `CodePostal`, `Ville`, `Fidelitee`, `Email`, `Hash`, `Password`) VALUES
 (1, 'test', 'test', '10ze', 59000, 'lille', 0, 'test@test', '0ff8033cf9437c213ee13937b1c4c455', '$2y$10$EG3Heesh7rWu.qxgnrRwMOBrrDMkyyLI.NcSZ.bwf1t/rRQcUe5Fy'),
-(2, 'Delcroix', 'Thomas', '10 rue du capitaine Michel', 59000, 'lille', 0, 'Thomas.delcroix@gastonberger.fr', '24b16fede9a67c9251d3e7c7161c83ac', '$2y$10$jqe.VLzf7HUKQI8l5vFkfOuYSpotyLxvU0gyRYQzuqCXB.RI5bbRK');
+(2, 'Delcroix', 'Thomas', '10 rue du capitaine Michel', 59000, 'lille', 0, 'Thomas.delcroix@gastonberger.fr', '24b16fede9a67c9251d3e7c7161c83ac', '$2y$10$jqe.VLzf7HUKQI8l5vFkfOuYSpotyLxvU0gyRYQzuqCXB.RI5bbRK'),
+(8, 'sdqd', 'tÃ©mÃ ', 'dfgdg', 59000, 'aze', 0, 'azdazd@adad', '26408ffa703a72e8ac0117e74ad46f33', '$2y$10$5bU4jwAoKMufLmVRU7is8u5WtF2N3mS3LAYMqfEp49yM7gDikqvpG'),
+(9, 'fsdf', 'th', '10 rue du capitaine Michel', 8440, 'df', 0, 'rengi.abarai@hotmail.fr', 'a597e50502f5ff68e3e25b9114205d4a', '$2y$10$zmWdQVqrA4QAZYss3yiibOrls3MZe9psyHC1NidaqAsZZ1CToCbbq'),
+(10, 'ddfgdfg', 'fgdfg', 'gdfg', 59000, 'dfgdg', 0, 'fgd@dfgdgf', 'd1c38a09acc34845c6be3a127a5aacaf', '$2y$10$TDESybkSSz1Cdod5WGhlM.09muRgmk778xBZ/DUr./lYRfG0SF8cu'),
+(11, 'efzef', 'efzef', 'zefzefzefze', 59000, 'efz', 0, 'pute@pute', '8dd48d6a2e2cad213179a3992c0be53c', '$2y$10$3sGxUS.oPGIPAOKv8.88e.yXOXXjI8zi5aQ.hXmVnumJGYh64TJ1y');
 
 -- --------------------------------------------------------
 
@@ -116,7 +140,23 @@ CREATE TABLE IF NOT EXISTS `Liaison` (
   KEY `Liaison_Secteur_FK` (`id`),
   KEY `Liaison_Port0_FK` (`Id_Port`),
   KEY `Liaison_Port1_FK` (`Id_Port_Arrivee`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Contenu de la table `Liaison`
+--
+
+INSERT INTO `Liaison` (`Code`, `Distance`, `id`, `Id_Port`, `Id_Port_Arrivee`) VALUES
+(1, 8.3, 3, 1, 2),
+(2, 9, 3, 2, 1),
+(3, 8, 3, 1, 3),
+(4, 7.9, 3, 3, 1),
+(5, 23.7, 3, 4, 2),
+(6, 25.1, 3, 2, 4),
+(7, 8.8, 5, 1, 5),
+(8, 8.8, 5, 5, 1),
+(9, 7.7, 6, 6, 7),
+(10, 7.4, 6, 7, 6);
 
 -- --------------------------------------------------------
 
@@ -140,7 +180,20 @@ CREATE TABLE IF NOT EXISTS `Port` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` text CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `Port`
+--
+
+INSERT INTO `Port` (`Id`, `Nom`) VALUES
+(1, 'Quiberon'),
+(2, 'Le Palais'),
+(3, 'Sauzon'),
+(4, 'Vannes'),
+(5, 'Port St Gildas'),
+(6, 'Lorient'),
+(7, 'Port-Tudy');
 
 -- --------------------------------------------------------
 
@@ -168,9 +221,25 @@ CREATE TABLE IF NOT EXISTS `Reservation` (
 
 CREATE TABLE IF NOT EXISTS `Secteur` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `Nom` text CHARACTER SET utf8 NOT NULL,
+  `Nom` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+
+--
+-- Contenu de la table `Secteur`
+--
+
+INSERT INTO `Secteur` (`id`, `Nom`) VALUES
+(1, 'Aix'),
+(2, 'Batz'),
+(3, 'Belle-Ile-en-Mer'),
+(4, 'Bréhat'),
+(5, 'Houat'),
+(6, 'Ile de Groix'),
+(7, 'Molène'),
+(8, 'Ouessant'),
+(9, 'Sein'),
+(10, 'Yeu');
 
 -- --------------------------------------------------------
 
@@ -213,11 +282,26 @@ CREATE TABLE IF NOT EXISTS `Traversee` (
 
 CREATE TABLE IF NOT EXISTS `Type` (
   `Num` int(11) NOT NULL AUTO_INCREMENT,
+  `Ref` varchar(2) NOT NULL,
   `Libelle` text CHARACTER SET utf8 NOT NULL,
   `Lettre` varchar(5) NOT NULL,
   PRIMARY KEY (`Num`),
   KEY `Type_Categorie_FK` (`Lettre`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Contenu de la table `Type`
+--
+
+INSERT INTO `Type` (`Num`, `Ref`, `Libelle`, `Lettre`) VALUES
+(1, 'A1', 'Adulte', 'A'),
+(2, 'A2', 'Junior 8 à 18 ans', 'A'),
+(3, 'A3', 'Enfant 0 à 7 ans', 'A'),
+(4, 'B1', 'Voiture long.inf.4m', 'B'),
+(5, 'B2', 'Voiture long.inf.5m', 'B'),
+(6, 'C1', 'Fourgon', 'C'),
+(7, 'C2', 'Camping Car', 'C'),
+(8, 'C3', 'Camion', 'C');
 
 --
 -- Contraintes pour les tables exportées
