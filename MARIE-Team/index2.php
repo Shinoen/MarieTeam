@@ -124,9 +124,21 @@ $requete1 = "SELECT * FROM Secteur";
                     </div class="logs">
                     <div class="col-lg-3 text-right">
                         <div class="logs">
-                            <a href="register.html">Inscription</a>
-                            <NOBR>|</NOBR>
-                            <a href="login.html">Se connecter</a>
+                            <?php if (isset($_SESSION['logged_in'])): ?>
+                                <?php if ( $_SESSION['logged_in'] != 1 ): ?>
+                                    <a href="register.html">Inscription</a>
+                                    <NOBR>|</NOBR>
+                                    <a href="login.html">Se connecter</a>
+                                <?php else : ?>
+                                    <NOBR>Connecté</NOBR>
+                                    <NOBR>|</NOBR>
+                                    <a href="logout.php">Déconnexion</a>
+                                <?php endif ?>
+                            <?php else : ?>
+                                <a href="register.html">Inscription</a>
+                                <NOBR>|</NOBR>
+                                <a href="login.html">Se connecter</a>
+                            <?php endif ?>
                         </div>
                     </div>
                     <!--== Social Icons End ==-->
@@ -197,7 +209,7 @@ $requete1 = "SELECT * FROM Secteur";
                                 <p><br> Le Plus Grand Site de Réservation Ferry au Monde </p>
 
                                 <div class="book-ur-car">
-                                    <form action="index2.html">
+                                    <form method="POST" action="Reservation.php">
                                         <div class="pick-location bookinput-item">
                                             <select class="custom-select" name="Secteur" id="Secteur" onchange="go()">
                                                 <option value="0" selected>SECTEUR</option>

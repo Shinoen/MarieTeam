@@ -1,3 +1,8 @@
+<?php 
+require 'db.php';
+session_start();
+?>  
+
 <script type="text/javascript"> 
 	function alerteEmail(message, page) { 
 		window.alert(message); 
@@ -7,7 +12,6 @@
 </script> 
  
 <?php  
- 
 require_once 'passwordLib.php';
 
 $prenom = $_POST['prenom'];
@@ -20,32 +24,24 @@ $hash = md5(rand(0, 1000));
 $codePostal = intval($_POST['codePostal']);
 $Fidelitee = floatval(0);
 
-
-$host = "localhost";
-$dbusername = "root";
-$dbpassword = "toor";
-$dbname = "marieteam";
-
-$conn = new mysqli ($host, $dbusername, $dbpassword, $dbname);
-
-mysqli_set_charset($conn,'utf8');
+mysqli_set_charset($mysqli,'utf8');
 
 if(mysqli_connect_error()) {
   die('Connect Error ('. mysqli_connect_errno() .')'
     .mysqli_connect_error());
 }
 else{
-	$sql ="SELECT Email FROM client WHERE Email='$email'";
-	if ($conn->query($sql)) {
+	$sql ="SELECT Email FROM Client WHERE Email='$email'";
+	if ($mysqli->query($sql)) {
 
-  		$result = $conn->query($sql);
+  		$result = $mysqli->query($sql);
 
-  		if (mysqli_affected_rows($conn) > 0) {
+  		if (mysqli_affected_rows($mysqli) > 0) {
   			echo '<script type="text/javascript">alerteEmail("Email déjà utilisé", "register.html");</script>';
 	 	}
 	 	else{
 	 		$sql ="INSERT INTO Client (Nom, Prenom, Adresse, CodePostal, Ville, Fidelitee, Email, Hash, Password) VALUES ('$nom', '$prenom', '$adresse', '$codePostal', '$ville', '$Fidelitee', '$email', '$hash', '$mdp')";
-	  			if ($conn->query($sql)) {
+	  			if ($mysqli->query($sql)) {
 	  				echo '<script type="text/javascript">alerteEmail("Compte créé avec succès", "index2.php");</script>';
 	  			}
 	  			else {
@@ -56,6 +52,6 @@ else{
 	else {
 		echo '{"success":"Erreur de connexion à la base de données."}';
 	}
-	$conn->close();
+	$mysqli->close();
 }
 ?>
