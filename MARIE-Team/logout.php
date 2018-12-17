@@ -9,15 +9,13 @@ session_destroy();
 <head>
   <meta charset="UTF-8">
   <title>Error</title>
-  <?php include 'css/css.html'; ?>
 </head>
 
 <body>
     <div class="form">
-          <h1>Merci de votre visite</h1>
-              
-          <p><?= 'Vous avez été déconnecté !'; ?></p>
-          <a href="index2.php"><button class="button button-block"/>Home</button></a>
+          <?php
+          header('Location: index2.php');
+            ?>
 
     </div>
 </body>
