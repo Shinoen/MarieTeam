@@ -124,20 +124,14 @@ $requete1 = "SELECT * FROM Secteur";
                     </div class="logs">
                     <div class="col-lg-3 text-right">
                         <div class="logs">
-                            <?php if (isset($_SESSION['logged_in'])): ?>
-                                <?php if ( $_SESSION['logged_in'] != 1 ): ?>
-                                    <a href="register.html">Inscription</a>
-                                    <NOBR>|</NOBR>
-                                    <a href="login.html">Se connecter</a>
-                                <?php else : ?>
-                                    <NOBR>Connecté</NOBR>
-                                    <NOBR>|</NOBR>
-                                    <a href="logout.php">Déconnexion</a>
-                                <?php endif ?>
-                            <?php else : ?>
+                            <?php if ( $_SESSION['logged_in'] != 1 ): ?>
                                 <a href="register.html">Inscription</a>
                                 <NOBR>|</NOBR>
                                 <a href="login.html">Se connecter</a>
+                            <?php else : ?>
+                                <a href="index2.php">Connecté</a>
+                                <NOBR>|</NOBR>
+                                <a href="logout.php">Déconnexion</a>
                             <?php endif ?>
                         </div>
                     </div>
@@ -153,7 +147,7 @@ $requete1 = "SELECT * FROM Secteur";
                 <div class="row">
                     <!--== Logo Start ==-->
                     <div class="col-lg-4">
-                        <a href="index2.php" class="logo">
+                        <a href="index2.html" class="logo">
                             <img src="assets/img/logo.png" alt="JSOFT">
                         </a>
                     </div>
@@ -163,7 +157,7 @@ $requete1 = "SELECT * FROM Secteur";
                     <div class="col-lg-8 d-none d-xl-block">
                         <nav class="mainmenu alignright">
                             <ul>
-                                <li class="active"><a href="index2.php">Home</a>
+                                <li class="active"><a href="index2.html">Home</a>
                                      
                                        
                                        
