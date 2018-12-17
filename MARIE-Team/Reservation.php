@@ -103,7 +103,7 @@ $Rq = $mysqli->query("SELECT Date, Heure, Id FROM Traversee where Code = ".$_POS
                 <div class="row">
                     <!--== Logo Start ==-->
                     <div class="col-lg-4">
-                        <a href="index.html" class="logo">
+                        <a href="index2.php" class="logo">
                             <img src="assets/img/logo.png" alt="JSOFT">
                         </a>
                     </div>
