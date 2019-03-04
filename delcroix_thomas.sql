@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 10 Décembre 2018 à 11:05
+-- Généré le: Lun 04 Mars 2019 à 11:00
 -- Version du serveur: 5.5.62-0ubuntu0.14.04.1
 -- Version de PHP: 5.5.9-1ubuntu4.26
 
@@ -40,8 +40,19 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `Bateau` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` text CHARACTER SET utf8 NOT NULL,
+  `PlaceAMax` int(11) NOT NULL,
+  `PlaceBMax` int(11) NOT NULL,
+  `PlaceCMax` int(11) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `Bateau`
+--
+
+INSERT INTO `Bateau` (`Id`, `Nom`, `PlaceAMax`, `PlaceBMax`, `PlaceCMax`) VALUES
+(1, 'Titanic', 3000, 100, 75),
+(2, 'Omari', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -82,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
   `Hash` varchar(32) CHARACTER SET utf8 NOT NULL,
   `Password` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`IdClient`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `Client`
@@ -94,7 +105,8 @@ INSERT INTO `Client` (`IdClient`, `Nom`, `Prenom`, `Adresse`, `CodePostal`, `Vil
 (8, 'sdqd', 'tÃ©mÃ ', 'dfgdg', 59000, 'aze', 0, 'azdazd@adad', '26408ffa703a72e8ac0117e74ad46f33', '$2y$10$5bU4jwAoKMufLmVRU7is8u5WtF2N3mS3LAYMqfEp49yM7gDikqvpG'),
 (9, 'fsdf', 'th', '10 rue du capitaine Michel', 8440, 'df', 0, 'rengi.abarai@hotmail.fr', 'a597e50502f5ff68e3e25b9114205d4a', '$2y$10$zmWdQVqrA4QAZYss3yiibOrls3MZe9psyHC1NidaqAsZZ1CToCbbq'),
 (10, 'ddfgdfg', 'fgdfg', 'gdfg', 59000, 'dfgdg', 0, 'fgd@dfgdgf', 'd1c38a09acc34845c6be3a127a5aacaf', '$2y$10$TDESybkSSz1Cdod5WGhlM.09muRgmk778xBZ/DUr./lYRfG0SF8cu'),
-(11, 'efzef', 'efzef', 'zefzefzefze', 59000, 'efz', 0, 'pute@pute', '8dd48d6a2e2cad213179a3992c0be53c', '$2y$10$3sGxUS.oPGIPAOKv8.88e.yXOXXjI8zi5aQ.hXmVnumJGYh64TJ1y');
+(11, 'efzef', 'efzef', 'zefzefzefze', 59000, 'efz', 0, 'pute@pute', '8dd48d6a2e2cad213179a3992c0be53c', '$2y$10$3sGxUS.oPGIPAOKv8.88e.yXOXXjI8zi5aQ.hXmVnumJGYh64TJ1y'),
+(12, 'DELCROIX', 'Thomas', '10 rue du capitaine Michel', 59000, 'Lille', 0, 'thomas.delcroix@gastonberger.com', '39059724f73a9969845dfe4146c5660e', '$2y$10$DvEsPcyeZIw3BJHd9BVmuu3xK3MVkYQ2uo9QJ7Pk/5vxrbYB/C7hO');
 
 -- --------------------------------------------------------
 
@@ -108,6 +120,27 @@ CREATE TABLE IF NOT EXISTS `Contenir` (
   `CapaciteMax` int(11) NOT NULL,
   PRIMARY KEY (`Lettre`,`Id`),
   KEY `Contenir_Bateau1_FK` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `Contenir`
+--
+
+INSERT INTO `Contenir` (`Lettre`, `Id`, `CapaciteMax`) VALUES
+('A', 1, 3000);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Enregistrer`
+--
+
+CREATE TABLE IF NOT EXISTS `Enregistrer` (
+  `NumReservation` int(11) NOT NULL,
+  `NumType` int(11) NOT NULL,
+  `Quantite` int(11) DEFAULT NULL,
+  PRIMARY KEY (`NumReservation`,`NumType`),
+  KEY `Enregistrer_Type_FK` (`NumType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -269,10 +302,37 @@ CREATE TABLE IF NOT EXISTS `Traversee` (
   `Heure` int(11) NOT NULL,
   `Code` int(11) NOT NULL,
   `Id` int(11) NOT NULL,
+  `PlaceA` int(11) NOT NULL,
+  `PlaceB` int(11) NOT NULL,
+  `PlaceC` int(11) NOT NULL,
   PRIMARY KEY (`Num`),
   KEY `Traversee_Liaison_FK` (`Code`),
   KEY `Traversee_Bateau0_FK` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `Traversee`
+--
+
+INSERT INTO `Traversee` (`Num`, `Date`, `Heure`, `Code`, `Id`, `PlaceA`, `PlaceB`, `PlaceC`) VALUES
+(3, '2018-12-12', 9, 2, 1, 0, 0, 0),
+(5, '2018-12-14', 12, 2, 2, 0, 0, 0),
+(6, '2018-12-14', 10, 2, 1, 0, 0, 0),
+(7, '2018-12-25', 15, 1, 2, 0, 0, 0);
+
+--
+-- Déclencheurs `Traversee`
+--
+DROP TRIGGER IF EXISTS `Place_traversee`;
+DELIMITER //
+CREATE TRIGGER `Place_traversee` BEFORE INSERT ON `Traversee`
+ FOR EACH ROW begin
+DECLARE PA INT;
+SET PA = (SELECT PlaceAMax FROM Bateau WHERE Id = NEW.Id);
+SET NEW.PlaceA = PA;
+end
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -313,6 +373,13 @@ INSERT INTO `Type` (`Num`, `Ref`, `Libelle`, `Lettre`) VALUES
 ALTER TABLE `Contenir`
   ADD CONSTRAINT `Contenir_Bateau1_FK` FOREIGN KEY (`Id`) REFERENCES `Bateau` (`Id`),
   ADD CONSTRAINT `Contenir_Categorie1_FK` FOREIGN KEY (`Lettre`) REFERENCES `Categorie` (`Lettre`);
+
+--
+-- Contraintes pour la table `Enregistrer`
+--
+ALTER TABLE `Enregistrer`
+  ADD CONSTRAINT `Enregistrer_Reserv_FK` FOREIGN KEY (`NumReservation`) REFERENCES `Reservation` (`Num`),
+  ADD CONSTRAINT `Enregistrer_Type_FK` FOREIGN KEY (`NumType`) REFERENCES `Type` (`Num`);
 
 --
 -- Contraintes pour la table `Equipement`
