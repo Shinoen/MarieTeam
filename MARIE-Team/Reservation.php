@@ -4,7 +4,8 @@ session_start();
 
 $refSecteur= $mysqli->escape_string($_POST['Secteur']);
 $refLiaison= $mysqli->escape_string($_POST['Liaison']);
-$Rq = $mysqli->query("SELECT Date, Heure, Id FROM Traversee where Code = ".$_POST['Liaison'].";");
+$Rq = $mysqli->query("SELECT Date, Heure, Id, Num FROM Traversee where Code = ".$_POST['Liaison'].";");
+$Count = $mysqli->query("SELECT count(*) Id FROM Traversee where Code = ".$_POST['Liaison'].";");
  ?>
 
  <!DOCTYPE html>
@@ -37,12 +38,6 @@ $Rq = $mysqli->query("SELECT Date, Heure, Id FROM Traversee where Code = ".$_POS
     <link href="style.css" rel="stylesheet">
     <!--=== Responsive CSS ===-->
     <link href="assets/css/responsive.css" rel="stylesheet">
-
-
-    <!--[if lt IE 9]>
-        <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="loader-active">
@@ -86,9 +81,15 @@ $Rq = $mysqli->query("SELECT Date, Heure, Id FROM Traversee where Code = ".$_POS
                     <!--== Social Icons Start ==-->
                    <div class="col-lg-3 text-right">
                         <div class="logs">
-                            <a href="register.html">Inscription</a>
-                            <NOBR>|</NOBR>
-                            <a href="login.html">Se connecter</a>
+                            <?php if ( $_SESSION['logged_in'] != 1 ): ?>
+                                <a href="register.html">Inscription</a>
+                                <NOBR>|</NOBR>
+                                <a href="login.html">Se connecter</a>
+                            <?php else : ?>
+                                <NOBR>Connecté</NOBR>
+                                <NOBR>|</NOBR>
+                                <a href="logout.php">Déconnexion</a>
+                            <?php endif ?>
                         </div>
                     </div>
                     <!--== Social Icons End ==-->
@@ -163,52 +164,61 @@ $Rq = $mysqli->query("SELECT Date, Heure, Id FROM Traversee where Code = ".$_POS
             </div>
         </div>
     </section>
-    <!--== Page Title Area End ==-->
-
-    <!--== Driver Page Content Start ==-->
-    <section id="driver-page-wrap" class="section-padding">
-    	<div class="container">
-			<div class="row">
-        		<table class="book-ur-car" border="1" cellpadding="10" cellspacing="1" width="100%">
-   					<tr>
-      					<th><center>Date</center></th>
-					    <th><center>Heure </center></th>
-					    <th><center>Bateau</center> </th>
-					</tr>
 
 
-					<?php while($array = mysqli_fetch_array($Rq)){
+
+    <section>
+        <div>
+            <div style="margin-top: 12px;display: flex;justify-content: center;flex-direction: column;align-items: center;">
+
+
+					<?php 
+                        $array3 = mysqli_fetch_array($Count);
+                        echo ("<div>Nous avons trouvé ".$array3["Id"]." résultats répondant à votre demande.</div>");
+
+                        while($array = mysqli_fetch_array($Rq)){
 
 						$Rq2 = $mysqli->query("SELECT Nom FROM Bateau WHERE Id = ".$array["Id"].";");
 						$array2 = mysqli_fetch_array($Rq2);
 
-						echo ("
-							<tr>
-					      		<td><center>".$array["Date"]."</center></td>
-					      		<td><center>".$array["Heure"]."</center></td>
-					      		<td><center>".$array2["Nom"]."</center> </td>
-					   		</tr>
-					   		");} 
+                        echo ('
+
+                                                    <div class="col-lg-12 item-recherche" style="color:;box-shadow: 2px 2px 20px 0 black;display: flex;justify-content: space-between;align-items: center;">
+                                                        <div style="width: 90px;border: 1px solid white;height: 100%;">
+                                                            <img src="assets/img/driver/driver-1.jpg" alt="Raju Ahammad">
+                                                        </div>
+                                                        <div style="display: flex;justify-content: center;flex-direction: column;">
+                                                            <div class="ecriture-recherche">
+                                                                Date : '.$array["Date"].'
+                                                            </div>
+                                                            <div class="ecriture-recherche">
+                                                                Heure : '.$array["Heure"].'
+                                                            </div>
+                                                            <div class="ecriture-recherche">
+                                                                Bateau : '.$array2["Nom"].'
+                                                            </div>
+                                                            <div class="ecriture-recherche">
+                                                                Nombre de place : 10
+                                                            </div>  
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <a href="Commande.php?Num='.$array["Num"].'" class="map-show" style="-webkit-appearance: button-bevel;margin-top: 0;padding: 61% 25px;font-size: 21px;">→</a>
+                                                        </div>
+                                                    </div>
+
+                                    ');}
 					?>
 
-
-				</table>
+                </div>
+            </center>
+        </div>
+    </section>
+				<!--</table>
 			</div>
 		</div>
-    </section>
+    </section> ==-->
     <!--== Driver Page Content End ==-->
-
-    <section>
-    	<div style="display: inline-flex;">
-	    	<div class="col-lg-8" style="background-color: rgb(0,0,0);">
-	    		sdg
-	    	</div>
-	    	<div class="col-lg-2" style="background-color: rgb(255,0,0);">
-	    		sdg
-	    	</div>
-    	</div>
-    </section>
-
 
     <!--== Footer Area Start ==-->
     <section id="footer-area">

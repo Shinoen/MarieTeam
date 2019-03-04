@@ -32,7 +32,7 @@ else { // User exists
         $_SESSION['Prenom'] = $user['first_name'];
         $_SESSION['Name'] = $user['last_name'];
         $_SESSION['logged_in'] = true;
-        header("location: index2.php");
+        header("location: index.php");
     }
     else {
         echo '<script type="text/javascript">alerteEmail("Mot de passe incorrect. Veuillez réessayer.", "login.html");</script>';

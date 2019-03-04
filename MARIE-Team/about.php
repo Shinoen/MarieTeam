@@ -1,3 +1,8 @@
+<?php 
+require 'db.php';
+session_start();
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -49,92 +54,7 @@
     <!--== Preloader Area End ==-->
 
     <!--== Header Area Start ==-->
-    <header id="header-area" class="fixed-top">
-        <!--== Header Top Start ==-->
-        <div id="header-top" class="d-none d-xl-block">
-            <div class="container">
-                <div class="row">
-                    <!--== Single HeaderTop Start ==-->
-                    <div class="col-lg-3 text-left">
-                         <i class="fa fa-map-marker"></i> 1 avenue Gaston Berger.
-                    </div>
-                    <!--== Single HeaderTop End ==-->
-
-                    <!--== Single HeaderTop Start ==-->
-                    <div class="col-lg-3 text-center">
-                        <i class="fa fa-mobile"></i> 03.20.51.62.84.79
-                    </div>
-                    <!--== Single HeaderTop End ==-->
-
-                    <!--== Single HeaderTop Start ==-->
-                    <div class="col-lg-3 text-center">
-                        <i class="fa fa-clock-o"></i> Lun-Ven 09.00 - 17.00
-                    </div>
-                    <!--== Single HeaderTop End ==-->
-
-                    <!--== Social Icons Start ==-->
-                    <!--== Social Icons Start ==-->
-                    <div class="col-lg-3 text-right">
-                        <div class="logs">
-                            <a href="register.html">Inscription</a>
-                            <NOBR>|</NOBR>
-                            <a href="login.html">Se connecter</a>
-                        </div>
-                    </div>
-                    <!--== Social Icons End ==-->
-                </div>
-            </div>
-        </div>
-        <!--== Header Top End ==-->
-
-        <!--== Header Bottom Start ==-->
-        <div id="header-bottom">
-            <div class="container">
-                <div class="row">
-                    <!--== Logo Start ==-->
-                    <div class="col-lg-4">
-                        <a href="index.html" class="logo">
-                            <img src="assets/img/logo.png" alt="JSOFT">
-                        </a>
-                    </div>
-                    <!--== Logo End ==-->
-
-                    <!--== Main Menu Start ==-->
-                    <div class="col-lg-8 d-none d-xl-block">
-                        <nav class="mainmenu alignright">
-                            <ul>
-                                 <li ><a href="index2.html">Home</a>
-                                     
-                                       
-                                       
-                                
-                             
-                               <li><a href="#">Bateaux</a>
-                                    
-                                </li>
-                                <li ><a href="#">Réservation</a>
-                                    <ul>
-                                        <li><a href="package.html">Abonnement</a></li>
-                                        <li><a href="driver.html">Capitaine</a></li>
-                                        <li class="active"><a href="about.html">Tarifs</a></li>                                    
-                                        <li><a href="title.html">Horaires</a></li>
-                                        
-                                       
-                                    </ul>
-                                   
-                                </li>
-                               
-                                </li>
-                                <li class ><a href="contact.html">Contact</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <!--== Main Menu End ==-->
-                </div>
-            </div>
-        </div>
-        <!--== Header Bottom End ==-->
-    </header>
+    <?php require 'header.php' ?>
     <!--== Header Area End ==-->
 
     <!--== Page Title Area Start ==-->
@@ -410,101 +330,7 @@
 </table>
 </table>
 
-    <section id="footer-area">
-        <!-- Footer Widget Start -->
-        <div class="footer-widget-area">
-            <div class="container">
-                <div class="row">
-                    <!-- Single Footer Widget Start -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-footer-widget">
-                            <h2>Contactez nous</h2>
-                            <div class="widget-body">
-                                <img src="assets/img/logo.png" alt="JSOFT">
-                              
-
-                                <div class="newsletter-area">
-                                    <form action="index.html">
-                                        <input type="email" placeholder="Subscribe Our Newsletter">
-                                        <button type="submit" class="newsletter-btn"><i class="fa fa-send"></i></button>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Footer Widget End -->
-
-                    <!-- Single Footer Widget Start -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-footer-widget">
-                            <h2>Destinations</h2>
-                            <div class="widget-body">
-                                <ul class="recent-post">
-                                    <li>
-                                        <a href="#">
-                                           Belle Ile en mer! 
-                                           <i class="fa fa-long-arrow-right"></i>
-                                       </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                          Houat 
-                                           <i class="fa fa-long-arrow-right"></i>
-                                       </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                          Ile de Groix
-                                           <i class="fa fa-long-arrow-right"></i>
-                                       </a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Footer Widget End -->
-
-                    <!-- Single Footer Widget Start -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single-footer-widget">
-                            <h2>Coordonner </h2>
-                            <div class="widget-body">
-                                
-                                <ul class="get-touch">
-                                    <li><i class="fa fa-map-marker"></i> 1 avenue Gaston Berger</li>
-                                    <li><i class="fa fa-mobile"></i> 03.20.51.62.84.79</li>
-                                    <li><i class="fa fa-envelope"></i>Contact@MarieTeam.fr</li>
-                                </ul>
-                                <a href="https://goo.gl/maps/b5mt45MCaPB2" class="map-show" target="_blank">Map</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Footer Widget End -->
-                </div>
-            </div>
-        </div>
-                    <!-- Single Footer Widget End -->
-                </div>
-            </div>
-        </div>
-        <!-- Footer Widget End -->
-
-        <!-- Footer Bottom Start -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer Bottom End -->
-    </section>
+    <?php require 'footer.php' ?>
     <!--== Footer Area End ==-->
 
     <!--== Scroll Top Area Start ==-->

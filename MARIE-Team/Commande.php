@@ -1,4 +1,22 @@
-<!DOCTYPE html>
+<?php 
+require 'db.php';
+session_start();
+
+$refTraversee = $mysqli->escape_string($_GET['Num']);
+$Rq = $mysqli->query("SELECT * FROM Traversee where Num = ".$refTraversee.";");
+$Array = mysqli_fetch_array($Rq);
+$Rq4 = $mysqli->query("SELECT Nom From Bateau where Id = ".$Array["Id"].";");
+$Bateau = mysqli_fetch_array($Rq4);
+$Rq1 = $mysqli->query("SELECT Id_Port, Id_Port_Arrivee FROM Liaison where Code = ".$Array["Code"].";");
+$Array1 = mysqli_fetch_array($Rq1);
+$Rq2 = $mysqli->query("SELECT Nom FROM Port where Id = ".$Array1["Id_Port"].";");
+$Array2 = mysqli_fetch_array($Rq2);
+$Rq3 = $mysqli->query("SELECT Nom FROM Port where Id = ".$Array1["Id_Port_Arrivee"].";");
+$Array3 = mysqli_fetch_array($Rq3);
+$Date = new Datetime($Array["Date"]);
+ ?>
+
+ <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
@@ -8,7 +26,7 @@
     <!--=== Favicon ===-->
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
-    <title>Cardoor - Car Rental HTML Template</title>
+    <title>Réservation</title>
 
     <!--=== Bootstrap CSS ===-->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -28,12 +46,6 @@
     <link href="style.css" rel="stylesheet">
     <!--=== Responsive CSS ===-->
     <link href="assets/css/responsive.css" rel="stylesheet">
-
-
-    <!--[if lt IE 9]>
-        <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="loader-active">
@@ -56,28 +68,36 @@
                 <div class="row">
                     <!--== Single HeaderTop Start ==-->
                     <div class="col-lg-3 text-left">
-                        <i class="fa fa-map-marker"></i> 1 avenue Gaston Berger.
+                        <i class="fa fa-map-marker"></i> 1 avenue Gaston Berger
+
                     </div>
                     <!--== Single HeaderTop End ==-->
 
                     <!--== Single HeaderTop Start ==-->
                     <div class="col-lg-3 text-center">
-                        <i class="fa fa-mobile"></i> 03.20.51.62.84.79
+                        <i class="fa fa-mobile"></i>03.20.51.62.84.79
                     </div>
                     <!--== Single HeaderTop End ==-->
 
                     <!--== Single HeaderTop Start ==-->
                     <div class="col-lg-3 text-center">
                         <i class="fa fa-clock-o"></i> Lun-Ven 09.00 - 17.00
+
                     </div>
                     <!--== Single HeaderTop End ==-->
 
                     <!--== Social Icons Start ==-->
-                    <div class="col-lg-3 text-right">
+                   <div class="col-lg-3 text-right">
                         <div class="logs">
-                            <a href="register.html">Inscription</a>
-                            <NOBR>|</NOBR>
-                            <a href="login.html">Se connecter</a>
+                            <?php if ( $_SESSION['logged_in'] != 1 ): ?>
+                                <a href="register.html">Inscription</a>
+                                <NOBR>|</NOBR>
+                                <a href="login.html">Se connecter</a>
+                            <?php else : ?>
+                                <NOBR>Connecté</NOBR>
+                                <NOBR>|</NOBR>
+                                <a href="logout.php">Déconnexion</a>
+                            <?php endif ?>
                         </div>
                     </div>
                     <!--== Social Icons End ==-->
@@ -92,7 +112,7 @@
                 <div class="row">
                     <!--== Logo Start ==-->
                     <div class="col-lg-4">
-                        <a href="index.html" class="logo">
+                        <a href="index2.php" class="logo">
                             <img src="assets/img/logo.png" alt="JSOFT">
                         </a>
                     </div>
@@ -102,7 +122,7 @@
                     <div class="col-lg-8 d-none d-xl-block">
                         <nav class="mainmenu alignright">
                             <ul>
-                                 <li ><a href="index2.html">Home</a>
+                               <li ><a href="index2.php">Home</a>
                                      
                                        
                                        
@@ -111,9 +131,9 @@
                                <li><a href="#">Bateaux</a>
                                     
                                 </li>
-                                <li ><a href="index.html">Réservation</a>
+                                <li class="active"><a href="index.html">Réservation</a>
                                     <ul>
-                                        <li ><a href="package.html">Abonnement</a></li>
+                                        <li><a href="package.html">Abonnement</a></li>
                                         <li><a href="driver.html">Capitaine</a></li>
                                         <li><a href="about.html">Tarifs</a></li>                                    
                                         <li><a href="driver.html">Horaires</a></li>
@@ -124,7 +144,7 @@
                                     
                                
                                 </li>
-                                <li class ="active"><a href="contact.html">Contact</a></li>
+                                <li class ><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -143,9 +163,9 @@
                 <!-- Page Title Start -->
                 <div class="col-lg-12">
                     <div class="section-title  text-center">
-                        <h2>Contact </h2>
-                        <span class="title-line"><i class="fa fa-anchor"></i></span>
-                        <p>Pour tout renseignement n'hésitez pas à nous contacter.</p>
+                        <h2>Nos Capitaines</h2>
+                        <span class="title-line"><i class="fa fa-car"></i></span>
+                        <p>Ayez confiance en nos capitaines, ce sont les meilleurs.</p>
                     </div>
                 </div>
                 <!-- Page Title End -->
@@ -154,59 +174,130 @@
     </section>
     <!--== Page Title Area End ==-->
 
-    <!--== Contact Page Area Start ==-->
-    <div class="contact-page-wrao section-padding">
+    <!--== Driver Page Content Start ==-->
+    <!-- <section id="driver-page-wrap" class="section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 m-auto">
-                    <div class="contact-form">
-                        <form method="post" action="testMail.php">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="name-input">
-                                        <input type="text" placeholder="Nom">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="email-input">
-                                        <input type="email" placeholder="Email ">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="website-input">
-                                        <input type="url" placeholder="Site">
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="subject-input">
-                                        <input type="text" placeholder="Objet">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="message-input">
-                                <textarea name="review" cols="30" rows="10" placeholder="Message"></textarea>
-                            </div>
-
-                            <div class="input-submit">
-                                <button type="submit">Envoyer</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                <table class="book-ur-car" border="1" cellpadding="10" cellspacing="1" width="100%">
+                    <tr>
+                        <th><center>Date</center></th>
+                        <th><center>Heure </center></th>
+                        <th><center>Bateau</center> </th>
+                    </tr> ==--> 
+    <section style="display: flex;justify-content: space-around;align-items: center;">
+        <div style="margin: 1% 1%;width: 20%;display: flex;align-items: flex-start;flex-direction: column;background-color: rgba(0, 0, 0, 0.25);border-radius: 3px;" class="book-ur-car">
+            
+            <h1 style="font-size: 1.5rem;align-self: center;">Réservation</h1>
+            <div style="margin-top: 12px;display: flex;flex-direction: column;">
+                <b><p style="font-size: 17px;">Traversée choisi :</p></b>
+                <p><?php echo $Array2["Nom"]." - ".$Array3["Nom"]; ?></p>
+            </div>
+            <div style="display: flex;flex-direction: column;">
+                <b><p style="font-size: 17px;">Date :</p></b>
+                <p><?php echo $Date->format("r");?></p>
+            </div>
+            <div style="display: flex;flex-direction: column;">
+                <b><p style="font-size: 17px;">Horaire :</p></b>
+                <p><?php echo "Le ".$Array["Date"]." à ".$Array["Heure"]."h"; ?></p>
+            </div>
+            <div style="display: flex;flex-direction: column;">
+                <b><p style="font-size: 17px;">Bateau de traversée :</p></b>
+                <p><?php echo "Vous naviguerez à bord du bateau ".$Bateau["Nom"]; ?></p>
             </div>
         </div>
-    </div>
-    <!--== Contact Page Area End ==-->
 
-    <!--== Map Area Start ==-->
-   <div style="width: 100%"><iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=1%20avenue%20gaston%20berger%20Lille+(Marie-team)&amp;ie=UTF8&amp;t=&amp;z=16&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/create-google-map/">Add map to website</a></iframe></div>
-    <!--== Map Area End ==-->
+        <div style="display: flex;justify-content: space-around;flex-direction: column;align-items: center;background-color: rgba(0, 0, 0, 0.25);border-radius: 3px;width: 50%;padding: 1%;margin-top: 15px;margin-bottom: 15px;">
+        	<div style="display: flex;flex-direction: column;align-self: center;justify-content: space-around;background-color: rgba(0, 0, 0, 0.25);width: 100%;margin-bottom: 15px;align-items: center;">
+        		<div style="font-weight: bold;font-size: 18px">Passager</div>
+        		<div style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;">
+        			<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Adulte : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+	        		<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Junior : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+	        		<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Enfant : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+        		</div>
+        	</div>
+        	<div style="display: flex;flex-direction: column;align-self: center;justify-content: space-around;background-color: rgba(0, 0, 0, 0.25);width: 100%;margin-bottom: 15px;align-items: center;">
+        		<div style="font-weight: bold;font-size: 18px">Véhicule inférieur à 2m de hauteur</div>
+        		<div style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;width: 80%">
+        			<div style="display:  flex;flex-direction: column;margin: 5%;width: 50%">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px;width: 100%">
+	        				Véhicule de longueur inférieur à 4m : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;width: 100%">
+	        			</div>
+	        		</div>
+	        		<div style="display:  flex;flex-direction: column;margin: 5%;width: 50%">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px;width: 100%;">
+	        				Véhicule de longueur inférieur à 5m : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;width: 100%">
+	        			</div>
+	        		</div>
+        		</div>
+        	</div>
+        	<div style="display: flex;flex-direction: column;align-self: center;justify-content: space-around;background-color: rgba(0, 0, 0, 0.25);width: 100%;align-items: center;">
+        		<div style="font-weight: bold;font-size: 18px">Véhicule supérieur à 2m de hauteur</div>
+        		<div style="display: flex;flex-direction: row;justify-content: space-around;align-items: center;">
+        			<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Fourgon : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+	        		<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Camping car : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+	        		<div style="display:  flex;flex-direction: column;margin: 5%;">
+	        			<div style="font-weight: bold;margin-bottom: 7.5px">
+	        				Camion : 
+	        			</div>
+	        			<div>
+	        				<input type="text" name="adulte" value="0" style="background-color: rgba(0, 0, 0, 0);border: 1px solid rgba(0, 0, 0, 0.5);border-radius: 2px;padding: 2%;">
+	        			</div>
+	        		</div>
+        		</div>
+        	</div>
+        </div>
+
+        <div style="width: 15%;height: 50%">
+        	<button style="width: 100%;height: 300px;background-color: rgba(0, 0, 0, 0.25);border: 1px solid rgba(0, 0, 0, 0.25);border-radius: 3px;">OK</button>
+        </div>
+        
+    </section>
+                <!--</table>
+            </div>
+        </div>
+    </section> ==-->
+    <!--== Driver Page Content End ==-->
 
     <!--== Footer Area Start ==-->
     <section id="footer-area">
@@ -217,14 +308,13 @@
                     <!-- Single Footer Widget Start -->
                     <div class="col-lg-4 col-md-6">
                         <div class="single-footer-widget">
-                            <h2>Contactez nous</h2>
+                            <h2>Contact</h2>
                             <div class="widget-body">
                                 <img src="assets/img/logo.png" alt="JSOFT">
-                              
-
+                                
                                 <div class="newsletter-area">
-                                    <form action="index.html">
-                                        <input type="email" placeholder="Subscribe Our Newsletter">
+                                    <form action="contact.html">
+                                        <input type="email" placeholder="Message">
                                         <button type="submit" class="newsletter-btn"><i class="fa fa-send"></i></button>
                                     </form>
                                 </div>
@@ -270,7 +360,7 @@
                         <div class="single-footer-widget">
                             <h2>Coordonner </h2>
                             <div class="widget-body">
-                                
+                              
                                 <ul class="get-touch">
                                     <li><i class="fa fa-map-marker"></i> 1 avenue Gaston Berger</li>
                                     <li><i class="fa fa-mobile"></i> 03.20.51.62.84.79</li>
@@ -279,7 +369,8 @@
                                 <a href="https://goo.gl/maps/b5mt45MCaPB2" class="map-show" target="_blank">Map</a>
                             </div>
                         </div>
-                    </div>      <!-- Single Footer Widget End -->
+                    </div>
+                    <!-- Single Footer Widget End -->
                 </div>
             </div>
         </div>
