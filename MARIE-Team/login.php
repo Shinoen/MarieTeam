@@ -1,6 +1,7 @@
 <?php 
 require 'db.php';
 session_start();
+
 ?>  
 
 
@@ -28,11 +29,15 @@ else { // User exists
 
     if ( password_verify($_POST['password'], $user['Password']) ) {
         
-        $_SESSION['Email'] = $user['email'];
-        $_SESSION['Prenom'] = $user['first_name'];
-        $_SESSION['Name'] = $user['last_name'];
+        $_SESSION['Email'] = $user['Email'];
+        $_SESSION['Prenom'] = $user['Prenom'];
+        $_SESSION['Name'] = $user['Nom'];
+        $_SESSION['id'] = $user['IdClient'];
         $_SESSION['logged_in'] = true;
-        header("location: index.php");
+        if(isset($_SESSION['champs']['Num']))
+            header("location: Commande.php?Num=".$_SESSION['champs']['Num']);
+        else
+            header("location: index.php");
     }
     else {
         echo '<script type="text/javascript">alerteEmail("Mot de passe incorrect. Veuillez réessayer.", "login.html");</script>';
