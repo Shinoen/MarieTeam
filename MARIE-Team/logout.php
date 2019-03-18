@@ -14,7 +14,7 @@ session_destroy();
 <body>
     <div class="form">
           <?php
-          header('Location: index2.php');
+          header('Location: index.php');
             ?>
 
     </div>
