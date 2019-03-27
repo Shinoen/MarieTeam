@@ -35,7 +35,7 @@ else { // User exists
         $_SESSION['id'] = $user['IdClient'];
         $_SESSION['logged_in'] = true;
         if(isset($_SESSION['champs']['Num']))
-            header("location: Commande.php?Num=".$_SESSION['champs']['Num']);
+            header("location: index.php?page=Commande&Num=".$_SESSION['champs']['Num']);
         else
             header("location: index.php");
     }
