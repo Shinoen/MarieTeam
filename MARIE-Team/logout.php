@@ -3,20 +3,5 @@
 session_start();
 session_unset();
 session_destroy(); 
+header('Location: index.php?page=home');
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Error</title>
-</head>
-
-<body>
-    <div class="form">
-          <?php
-          header('Location: index.php');
-            ?>
-
-    </div>
-</body>
-</html>
