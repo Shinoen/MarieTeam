@@ -49,6 +49,6 @@ else {
 	$_SESSION['champs']['fourgon'] = $fourgon;
 	$_SESSION['champs']['campcar'] = $campcar;
 	$_SESSION['champs']['camion'] = $camion;
-	header("location: login.html");
+	header("location: index.php?page=login&ex=1");
 }
  ?>
