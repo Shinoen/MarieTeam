@@ -1,3 +1,32 @@
+<style type="text/css">
+    #menCom{
+    position: absolute;
+    visibility: hidden;
+    right: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    padding: 10px 20px;
+    opacity: 0;
+    transition: all 0.25s ease 0.25s;
+    z-index: 15;
+    }
+    #MenCom:hover #menCom{
+    visibility: visible;
+    opacity: 1;
+    }
+    #MenCom{
+    position: relative;
+    }
+    NOBR ul li:hover{
+    color: #79F8F8;
+    }
+    NOBR ul li{
+    text-align: left;
+    padding: 5px 0;
+    }
+</style>
+
 <header id="header-area" class="fixed-top">
         <!--== Header Top Start ==-->
         <div id="header-top" class="d-none d-xl-block">
@@ -22,11 +51,13 @@
                     <div class="col-lg-3 text-right">
                         <div class="logs">
                             <?php if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] != 1 ): ?>
-                                <a href="register.html">Inscription</a>
+                                <a href="?page=register&ex=1">Inscription</a>
                                 <NOBR>|</NOBR>
-                                <a href="login.html">Se connecter</a>
+                                <a href="?page=login&ex=1">Se connecter</a>
                             <?php else : ?>
-                                <NOBR>Connecté</NOBR>
+                                <NOBR id="MenCom"><?="Bonjour ".$_SESSION['Prenom']?>
+                                    <ul id="menCom"><li><a href="?page=account&ex=1" style="color: black">Mon compte</a></li><li>Historique</li></ul>
+                                </NOBR>
                                 <NOBR>|</NOBR>
                                 <a href="logout.php">Déconnexion</a>
                             <?php endif ?>
@@ -76,7 +107,7 @@
                                     
                                
                                 </li>
-                                <li class ><a href="contact.php">Contact</a></li>
+                                <li class ><a href="?page=contact">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
